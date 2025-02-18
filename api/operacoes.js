@@ -1,32 +1,31 @@
-const { somar, sub, mul, div } = require("../services/service");
+const { somar, mult, sub, div } = require("../services/service");
 
 function apiSomar(req, res){
+    console.log(req.body)
     const { num1, num2 } = req.body;
     const result = somar(num1, num2);
     res.status(200).send({ result });
 };
 
-// function apiSubtrair(req, res){
-//     const {num1, num2} = req.body;
-//     const resultadoDaSubtracao = sub(num1, num2);
-//     res.status(200).send({ resultadoDaSubtracao });
-// };
+function apiSub(req, res){
+    console.log(req.body)
+    const { num1, num2 } = req.body;
+    const result = sub(num1, num2);
+    res.status(200).send({ result });
+};
 
-// function apiMultiplicar(req, res){
-//     const {num1, num2} = req.body;
-//     const resultadoDaMultiplicacao = mul(num1, num2); 
-//     res.status(200).send({resultadoDaMultiplicacao});
-// };
+function apiMult(req, res){
+    console.log(req.body)
+    const { num1, num2 } = req.body;
+    const result = mult(num1, num2);
+    res.status(200).send({ result });
+};
 
-// function apiDividir(req, res){
-//     const {num1, num2} = req.body;
-//     const resultadoDaDivisao = div(num1, num2);
-//     res.status(200).send({resultadoDaDivisao});
-// };
+function apiDiv(req, res){
+    console.log(req.body)
+    const { num1, num2 } = req.body;
+    const result = div(num1, num2);
+    res.status(200).send({ result });
+};
 
-module.exports = {
-    apiSomar,
-    // apiSubtrair,
-    // apiMultiplicar,
-    // apiDividir
-}
+module.exports = { apiSomar, apiSub, apiMult, apiDiv }
