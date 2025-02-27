@@ -1,20 +1,10 @@
 const express = require("express");
-const { apiSomar, 
-        apiSub, 
-        apiMult, 
-        apiDiv
-    } = require("./api/operacoes");
+const router = require("./src/routes/operacoes");
 const app = express();
 const port = 3000;
 app.use(express.json());
 
-app.post('/somar', apiSomar);
-
-app.post('/sub', apiSub);
-
-app.post('/mult', apiMult);
-
-app.post('/div', apiDiv);
+app.use('/api/v1/user', router)
 
 app.listen(port, () => {
     console.log('servidor rodando na porta ' + port)
