@@ -1,25 +1,30 @@
-const users = new Array("Jão", "Ana", "Joe");
+const database = require("../database");
+const person = require("./person");
 
 class User{
-    FindAll(){
-        return users;
-    }
+    constructor(){
+        this.model = database.db.define("users", {
+            id: {
+                type: database.db.Sequelize.INTEGER,
+                primaryKey: true,
+                autoIncrement:true,
+            },
+            email: {
+                type: database.db.Sequelize.STRING,
+                unique: true
+            },
+            password: {
+                type: database.db.Sequelize.STRING
+            },
+        })
 
-    FindByIndex(index){
-        return users[index];
-    }
-
-    Create(name){
-        return users.push(name);
-    }
-
-    Update(index, name){
-        return users[index] = name;
-    }
-
-    Delete(index){
-        users.splice(index, 1);
+        this.model.hasOne(person, {
+            foreignKey: 'userId'
+        })
+        person.belongsTo(this.model, {
+            foreignKey: 'userId'
+        })
     }
 }
 
-module.exports = new User();
+module.exports = new User().model;

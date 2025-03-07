@@ -1,25 +1,43 @@
-const User = require("../model/user")
+const user = require("../model/user");
 
 
 class ServiceUser{
-    FindAll(){
-        return User.FindAll();
+    async FindAll({ transaction }){
+        return user.findAll({ transaction });
     }
 
-    FindByIndex(index){
-        return User.FindByIndex(index);
+    async FindById(id, transaction) {
+        return user.findByPk(id, {transaction});
     }
 
-    Create(name){
-        User.Create(name)
+    async Create(email, password, transaction){
+        if(!email){
+            throw new Error("Please, enter your email");
+        }else if(!password){
+            throw new Error("Please, enter your password");
+        }
+
+        return user.create({
+            email, password
+        }, { transaction });
     }
 
-    Update(index, name){
-        User.Update(index, name);
+    async Update(id, email, password, transaction){
+        const oldUser = await this.FindById(id, transaction);
+
+        oldUser.email = email || oldUser.email;
+        oldUser.password = password || oldUser.password;
+
+        oldUser.save({ transaction });
+
+        return oldUser;
     }
 
-    Delete(index){
-        User.Delete(index);
+    async Delete(id, transaction){
+        const user = await this.FindById(id, transaction);
+        user.destroy({ transaction });
+
+        return true;
     }
 }
 
