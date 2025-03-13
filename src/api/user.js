@@ -62,7 +62,18 @@ class ApiUser{
         } catch (e) {
             res.status(500).send({ msg: e.message })
         }
-    };    
+    };   
+    
+    async Login(req, res){
+        try{
+            const { email, password } = req.body;
+            const token = await serviceUser.Login(email, password);
+
+            res.status(200).send({ token })
+        }catch(e){
+            res.status(500).send({ msg: e.message })
+        }
+    }
 }
 
 
